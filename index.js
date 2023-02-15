@@ -24,7 +24,7 @@ app.get("/stockPrice", (req, res) => {
 });
 
 // Sart the express app
-const PORT = process.env.PORT || 8080;
+const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}...`);
 });

@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Expose the default Express.js port
-EXPOSE 8080
+EXPOSE 3000
 
 # Set the command to start the Express.js server
 CMD ["node", "index.js"]

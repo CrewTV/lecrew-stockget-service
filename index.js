@@ -1,39 +1,14 @@
-const http = require("http");
+const { apiKey } = require("./key");
+const finnhub = require("finnhub");
 
-const options = {
-  hostname: "jsonplaceholder.typicode.com",
-  path: "/posts",
-  method: "GET",
-  headers: {
-    "Content-Type": "application/json",
-  },
+const getStockPrice = () => {
+  const api_key = finnhub.ApiClient.instance.authentications["api_key"];
+  api_key.apiKey = apiKey;
+  const finnhubClient = new finnhub.DefaultApi();
+
+  finnhubClient.quote("AAPL", (error, data, response) => {
+    console.log("Apple stock data:", data);
+  });
 };
 
-const getPosts = () => {
-  let data = "";
-
-  const request = http.request(options, (response) => {
-    // Set the encoding, so we don't get log to the console a bunch of gibberish binary data
-    response.setEncoding("utf8");
-
-    // As data starts streaming in, add each chunk to "data"
-    response.on("data", (chunk) => {
-      data += chunk;
-    });
-
-    // The whole response has been received. Print out the result.
-    response.on("end", () => {
-      console.log(data);
-    });
-  });
-
-  // Log errors if any occur
-  request.on("error", (error) => {
-    console.error(error);
-  });
-
-  // End the request
-  request.end();
-};
-
-getPosts();
+getStockPrice();

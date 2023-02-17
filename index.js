@@ -1,4 +1,3 @@
-const { apiKey } = require("./key");
 const finnhub = require("finnhub");
 const express = require("express");
 const cors = require("cors");
@@ -15,6 +14,7 @@ app.get("/", (req, res) => {
 
 // Endpoint to retrieve stock price
 app.get("/stockPrice", (req, res) => {
+    console.log('Stock price call');
   const api_key = finnhub.ApiClient.instance.authentications["api_key"];
   api_key.apiKey = process.env.APIKEY;
   const finnhubClient = new finnhub.DefaultApi();

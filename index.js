@@ -9,22 +9,22 @@ app.use(cors({ origin: "*" }));
 
 // Default endpoint
 app.get("/", (req, res) => {
-  res.send("Hello, World!");
+    res.send("Hello, World!");
 });
 
 // Endpoint to retrieve stock price
-app.get("/stockPrice", (req, res) => {
-    console.log('Stock price call');
-  const api_key = finnhub.ApiClient.instance.authentications["api_key"];
-  api_key.apiKey = process.env.APIKEY;
-  const finnhubClient = new finnhub.DefaultApi();
-  finnhubClient.quote("AAPL", (error, data, response) => {
-    res.json(data);
-  });
+app.get("/assetInfo/:id", (req, res) => {
+    const api_key = finnhub.ApiClient.instance.authentications['api_key'];
+    api_key.apiKey = process.env.APIKEY;
+    const finnhubClient = new finnhub.DefaultApi()
+
+    finnhubClient.quote(req.params.id, (error, data, response) => {
+        res.json(data)
+    });
 });
 
 // Sart the express app
 const port = process.env.PORT || 8080;
 app.listen(port, () => {
-  console.log("Hello world listening on port", port);
+    console.log("Hello world listening on port", port);
 });
